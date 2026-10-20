@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sweet Crumbs: Home Baked Cakes, Chennai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF4E4; --surface:#FFFFFF; --ink:#2E1A2F; --muted:#6B5A6C; --accent:#B3345E; --accent-ink:#FFFFFF; --line:#D5DEC6;
+  --t1:#F6C9D3; --t2:#C9E0B5; --t3:#F2DDA6; --t4:#D9C6E8;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#1D141E; --surface:#2A1D2B; --ink:#F4EAF3; --muted:#B9A8BA; --accent:#E5678C; --accent-ink:#2A0F1A; --line:#43304A; --t1:#6A3446; --t2:#3E5535; --t3:#6B5A2A; --t4:#4C3A63;}
+}
+:root[data-theme="dark"]{--bg:#1D141E; --surface:#2A1D2B; --ink:#F4EAF3; --muted:#B9A8BA; --accent:#E5678C; --accent-ink:#2A0F1A; --line:#43304A; --t1:#6A3446; --t2:#3E5535; --t3:#6B5A2A; --t4:#4C3A63;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Young Serif",Georgia,serif;font-weight:400;line-height:1.15;margin:0}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 40px}
+h1{font-size:clamp(2.4rem,8vw,4.2rem);max-width:12ch}
+.lead{max-width:46ch;color:var(--muted);margin:18px 0 26px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:13px 24px;font:700 1rem "DM Sans",sans-serif;cursor:pointer;text-decoration:none}
+.btn:focus-visible,.add:focus-visible,.qty button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;color:var(--muted);font-size:.95rem}
+section{padding:36px 0}
+h2{font-size:1.8rem;margin-bottom:18px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{aspect-ratio:1/1;border-radius:22px;display:flex;align-items:center;justify-content:center;padding:14px}.tile svg{width:100%;height:100%}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.hero-art{background:var(--t1);border-radius:32px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:20px}.hero-art svg{width:100%;height:100%}
+@media (max-width:720px){.hero{grid-template-columns:1fr}.hero-art{order:-1;max-width:260px}}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.item h3{font-size:1.2rem}
+.item p{margin:0;color:var(--muted);font-size:.95rem}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px}
+.price{font-weight:700}
+.add{background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:999px;padding:7px 16px;font:700 .95rem "DM Sans",sans-serif;cursor:pointer}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:34px;height:34px;border-radius:50%;border:2px solid var(--accent);background:transparent;color:var(--accent);font:700 1.1rem "DM Sans",sans-serif;cursor:pointer}
+.order{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+#lines{margin:0 0 14px;padding:0;list-style:none}
+#lines li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}
+.empty{color:var(--muted)}
+.total{display:flex;justify-content:space-between;font-weight:700;margin:12px 0 18px}
+label{display:block;font-weight:700;font-size:.95rem;margin-bottom:4px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:12px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 14px}
+footer{padding:30px 0 50px;color:var(--muted);font-size:.9rem}
+.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.btn,.add{transition:transform .12s}.btn:active,.add:active{transform:scale(.97)}}
+.cust{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;grid-template-columns:1fr 200px;gap:22px}
+.pv{background:var(--t1);border-radius:24px;aspect-ratio:1/1;padding:16px;align-self:start}.pv svg{width:100%;height:100%}
+@media (max-width:720px){.cust{grid-template-columns:1fr}.pv{max-width:180px;order:-1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 14px;font:500 .95rem "DM Sans",sans-serif;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tip{color:var(--muted);font-size:.95rem;margin:0 0 14px;min-height:1.5em}
+.sw{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sw button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);cursor:pointer}
+.sw button[aria-checked="true"]{outline:3px solid var(--ink);outline-offset:2px}
+input[type="checkbox"]{width:auto;margin:0 10px 0 0}
+.ck{display:flex;align-items:center;font-weight:500;margin-bottom:10px}
+.cprice{font-weight:700;margin:6px 0 14px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700}
+details p{margin:10px 0 0;color:var(--muted)}
+.link{background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;font:inherit;padding:0 0 0 8px}
+#lines li.save{color:var(--accent)}
+textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:12px;resize:vertical}
+textarea:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.ask{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.ask h3{font-size:1.2rem;margin-bottom:6px}
+.tile.photo,.hero-art.photo{padding:0;overflow:hidden}
+.tile img,.hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+.pv.photo{padding:10px}
+.pv img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block}
+.chip:focus-visible,.sw button:focus-visible,summary:focus-visible,.link:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cake" viewBox="0 0 120 120"><ellipse cx="60" cy="106" rx="46" ry="7" fill="var(--c3)"/><rect x="22" y="62" width="76" height="42" rx="9" fill="var(--c1)"/><rect x="34" y="36" width="52" height="30" rx="8" fill="var(--c1)"/><rect x="22" y="62" width="76" height="10" rx="5" fill="var(--c2)"/><circle cx="32" cy="74" r="5" fill="var(--c2)"/><circle cx="50" cy="76" r="6" fill="var(--c2)"/><circle cx="70" cy="74" r="5" fill="var(--c2)"/><circle cx="88" cy="77" r="6" fill="var(--c2)"/><rect x="34" y="36" width="52" height="9" rx="4.5" fill="var(--c2)"/><circle cx="46" cy="47" r="4" fill="var(--c2)"/><circle cx="74" cy="48" r="4.5" fill="var(--c2)"/><circle cx="60" cy="29" r="7" fill="var(--c4)"/><path d="M60 22 q3-8 9-9" stroke="var(--c3)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="36" cy="92" r="2.5" fill="var(--c2)" opacity=".7"/><circle cx="52" cy="94" r="2.5" fill="var(--c2)" opacity=".7"/><circle cx="68" cy="92" r="2.5" fill="var(--c2)" opacity=".7"/><circle cx="84" cy="94" r="2.5" fill="var(--c2)" opacity=".7"/></symbol></svg>
+<div class="wrap">
+<header class="hero">
+  <div>
+  <h1 id="name">Sweet Crumbs</h1>
+  <p class="lead" id="tag">Cakes baked fresh at home in Chennai. Pick what you like, tell us the date, and we’ll confirm everything on WhatsApp.</p>
+  <a class="btn" href="#order">Order a cake</a>
+  <div class="facts"><span id="area">Delivery across Chennai</span><span>Order 2 days ahead</span><span>Custom designs on request</span></div>
+  </div>
+  <div class="hero-art" id="heroart" aria-hidden="true"><svg style="--c1:#B3345E;--c2:#F7E3EA;--c3:#6E1F3A;--c4:#C0392B"><use href="#cake"/></svg></div>
+</header>
+
+<section aria-labelledby="g">
+  <h2 id="g">Recent bakes</h2>
+  <div class="gallery" id="gallery" role="list">
+    <div class="tile" role="listitem" style="background:var(--t1)" aria-label="Truffle cake"><svg style="--c1:#5A3A2E;--c2:#9C6B52;--c3:#3B241B;--c4:#B3345E"><use href="#cake"/></svg></div>
+    <div class="tile" role="listitem" style="background:var(--t2)" aria-label="Pistachio cake"><svg style="--c1:#7FA36A;--c2:#EAF3DF;--c3:#4B6B3B;--c4:#B3345E"><use href="#cake"/></svg></div>
+    <div class="tile" role="listitem" style="background:var(--t3)" aria-label="Butterscotch cake"><svg style="--c1:#D9A441;--c2:#FFF3D1;--c3:#8A6420;--c4:#C0392B"><use href="#cake"/></svg></div>
+    <div class="tile" role="listitem" style="background:var(--t4)" aria-label="Blueberry cake"><svg style="--c1:#7A5CA8;--c2:#EDE3F7;--c3:#4B3470;--c4:#B3345E"><use href="#cake"/></svg></div>
+  </div>
+</section>
+
+<section aria-labelledby="m">
+  <h2 id="m">Menu</h2>
+  <div class="menu" id="menu"></div>
+</section>
+
+<section aria-labelledby="c">
+  <h2 id="c">Design your cake</h2>
+  <div class="cust">
+    <div>
+      <p style="margin:0 0 8px;font-weight:700">Not sure? Pick an occasion</p>
+      <div class="chips" id="occ">
+        <button type="button" class="chip" aria-pressed="false" data-occ="Birthday">Birthday</button>
+        <button type="button" class="chip" aria-pressed="false" data-occ="Kids party">Kids party</button>
+        <button type="button" class="chip" aria-pressed="false" data-occ="Anniversary">Anniversary</button>
+        <button type="button" class="chip" aria-pressed="false" data-occ="Festival">Festival</button>
+      </div>
+      <p class="tip" id="tip" aria-live="polite">We’ll suggest a colour and sweetness level that suits the occasion.</p>
+      <div class="fields">
+        <div><label for="cw">Size</label><select id="cw"><option value="0.5">0.5 kg (4 to 5 people)</option><option value="1" selected>1 kg (8 to 10 people)</option><option value="1.5">1.5 kg</option><option value="2">2 kg</option></select></div>
+        <div><label for="cs">Sugar level</label><select id="cs"><option>Regular sugar</option><option>Less sugar</option><option>No refined sugar</option></select></div>
+        <div><label for="cf">Finish</label><select id="cf"><option>Buttercream</option><option>Whipped cream</option><option>Fondant design</option></select></div>
+      </div>
+      <label id="cclab">Icing colour</label>
+      <div class="sw" id="cc" role="radiogroup" aria-labelledby="cclab"></div>
+      <label for="cm">Message on the cake (optional)</label>
+      <input id="cm" maxlength="30" placeholder="Happy Birthday Riya">
+      <label class="ck"><input type="checkbox" id="ce" checked>Eggless, no extra cost</label>
+      <label class="ck"><input type="checkbox" id="ct">Add a topper (+₹150)</label>
+      <div class="cprice" id="cprice"></div>
+      <button class="btn" id="addc" type="button">Add this cake to my order</button>
+    </div>
+    <div class="pv" aria-hidden="true"><svg id="pv"><use href="#cake"/></svg></div>
+  </div>
+</section>
+
+<section aria-labelledby="s">
+  <h2 id="s">Ways to save</h2>
+  <div class="menu">
+    <div class="item"><h3>Order early</h3><p>Pick a date 3 or more days ahead and 5% comes off automatically.</p></div>
+    <div class="item"><h3>Cake and snack combo</h3><p>Add a cake with a box of cupcakes, brownies or cookies and ₹100 comes off.</p></div>
+    <div class="item"><h3>Keep the finish simple</h3><p>Buttercream costs ₹250 less than a fondant design and still looks lovely.</p></div>
+    <div class="item"><h3>Choose the right size</h3><p>A 0.5 kg cake is enough for 4 to 5 people. A smaller size means a smaller bill.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="f">
+  <h2 id="f">Questions people ask</h2>
+  <details><summary>How early should I order?</summary><p>At least 2 days ahead. Order 3 or more days ahead and the 5% early-bird discount applies automatically.</p></details>
+  <details><summary>What do the sugar levels mean?</summary><p>Regular is our usual sweetness. Less sugar tastes noticeably milder and suits kids and older guests. No refined sugar uses natural sweeteners, so the cake can be a little denser. It costs ₹100 more per kg.</p></details>
+  <details><summary>How does payment work?</summary><p>We confirm your order on WhatsApp. You pay a 50% advance by UPI and the rest on delivery.</p></details>
+  <details><summary>Can I change my order after sending it?</summary><p>Yes, until 24 hours before your date. Just message us on WhatsApp.</p></details>
+  <details><summary>I have an allergy. What should I do?</summary><p>Write it in the note before you send. Tell us about nuts, dairy or gluten and we’ll tell you honestly what we can and can’t do.</p></details>
+  <details><summary>How long does the cake stay fresh?</summary><p>Keep it in the fridge and eat it within 2 days. Take it out 20 minutes before cutting.</p></details>
+  <details><summary>Do you deliver?</summary><p>Yes, across Chennai for a small delivery fee. You can also pick it up from us.</p></details>
+  <div class="ask">
+    <h3>Still have a question?</h3>
+    <p class="tip">Type it below and WhatsApp opens with your question ready to send.</p>
+    <div class="chips" id="qchips">
+      <button type="button" class="chip">Can I see more photos of your cakes?</button>
+      <button type="button" class="chip">Do you make 2-tier cakes?</button>
+      <button type="button" class="chip">Can you deliver to my area?</button>
+    </div>
+    <label for="qtext">Your question</label>
+    <textarea id="qtext" rows="3" placeholder="Example: Can you make a nut-free cake for 12 people?"></textarea>
+    <label for="qname">Your name (optional)</label>
+    <input id="qname" autocomplete="name">
+    <a class="btn" id="qsend" href="#" aria-disabled="true">Ask on WhatsApp</a>
+  </div>
+</section>
+
+<section id="order" aria-labelledby="o">
+  <h2 id="o">Your order</h2>
+  <div class="order">
+    <ul id="lines" aria-live="polite"></ul>
+    <div class="total"><span>Total</span><span id="total">₹0</span></div>
+    <div class="fields">
+      <div><label for="cname">Your name</label><input id="cname" autocomplete="name"></div>
+      <div><label for="cdate">Needed on</label><input id="cdate" type="date"></div>
+    </div>
+    <label for="cnote">Message or design idea (optional)</label>
+    <input id="cnote" placeholder="Name on the cake, theme, flavour changes">
+    <a class="btn" id="send" href="#" aria-disabled="true">Send order on WhatsApp</a>
+  </div>
+</section>
+
+<footer>Home bakery in Chennai. Orders are confirmed on WhatsApp.</footer>
+</div>
+
+<script>
+/* ===== EDIT THESE FOR EACH BUSINESS ===== */
+var CONFIG = {
+  name: "Sweet Crumbs",
+  whatsapp: "919999999999",   // country code + number, no + or spaces
+  preview: "https://tse4.mm.bing.net/th/id/OIP.1ktAPhYFY3ztiZoD7mh7IgHaHa?r=0&pid=Api&h=220&P=0",   // photo in the Design your cake box
+  hero: "https://www.yummycake.co.in/wp-content/uploads/2022/11/Yummy-Chocolate-Cake.jpeg",                  // optional: main cake photo, e.g. "images/hero.jpg"
+  photos: [
+    "https://tse4.mm.bing.net/th/id/OIP.VZz_Si48JTq-rK_i135-uQHaFj?r=0&pid=Api&h=220&P=0",
+    "https://tse1.mm.bing.net/th/id/OIP.jQQV9tFz8gzajanMqByOngHaEo?r=0&pid=Api&h=220&P=0",
+    "https://tse1.mm.bing.net/th/id/OIP.YpBQ3jIffNpseSrxu6UN2AHaGP?r=0&pid=Api&h=220&P=0"
+  ],                 // optional: up to 8 photos, e.g. ["images/cake1.jpg", "images/cake2.jpg"]
+  items: [
+    {id:1, name:"Eggless truffle cake", desc:"Dark chocolate sponge, ganache, 1 kg", price:900},
+    {id:2, name:"Pistachio rose cake", desc:"Rose petals, no maida, 1 kg", price:1100},
+    {id:3, name:"Rasmalai cake", desc:"Indian sweet flavour, 1 kg", price:1200},
+    {id:4, name:"Cupcakes (box of 6)", desc:"Mixed flavours", price:420},
+    {id:5, name:"Brownies (box of 6)", desc:"Fudgy, with walnuts", price:360},
+    {id:6, name:"Butter cookies (250 g)", desc:"Crisp, baked fresh", price:240}
+  ]
+};
+/* ======================================== */
+
+var cart = {};
+function rupee(n){ return "₹" + n.toLocaleString("en-IN"); }
+
+function renderMenu(){
+  var html = "";
+  CONFIG.items.forEach(function(it){
+    html += '<div class="item"><h3>' + it.name + '</h3><p>' + it.desc + '</p>' +
+      '<div class="row"><span class="price">' + rupee(it.price) + '</span><span id="ctl' + it.id + '"></span></div></div>';
+  });
+  document.getElementById("menu").innerHTML = html;
+  CONFIG.items.forEach(renderControl);
+}
+
+function renderControl(it){
+  var q = cart[it.id] || 0, el = document.getElementById("ctl" + it.id);
+  if(!q){
+    el.innerHTML = '<button class="add" data-id="' + it.id + '" data-d="1">Add</button>';
+  } else {
+    el.innerHTML = '<span class="qty"><button data-id="' + it.id + '" data-d="-1" aria-label="Remove one">−</button>' +
+      '<b>' + q + '</b><button data-id="' + it.id + '" data-d="1" aria-label="Add one">+</button></span>';
+  }
+}
+
+function renderCart(){
+  var lines = "", total = 0, any = false;
+  CONFIG.items.forEach(function(it){
+    var q = cart[it.id] || 0;
+    if(q){ any = true; total += q * it.price;
+      lines += "<li><span>" + q + " × " + it.name + "</span><span>" + rupee(q * it.price) + "</span></li>"; }
+  });
+  document.getElementById("lines").innerHTML = any ? lines : '<li class="empty">Nothing added yet. Pick something from the menu.</li>';
+  document.getElementById("total").textContent = rupee(total);
+  updateLink(any, total);
+}
+
+function updateLink(any, total){
+  var a = document.getElementById("send");
+  if(!any){ a.setAttribute("aria-disabled","true"); a.href = "#"; return; }
+  var text = "Hi " + CONFIG.name + ", I’d like to order:\n";
+  CONFIG.items.forEach(function(it){ if(cart[it.id]) text += "• " + cart[it.id] + " × " + it.name + "\n"; });
+  text += "Total: " + rupee(total) + "\n";
+  var n = document.getElementById("cname").value.trim(), d = document.getElementById("cdate").value, m = document.getElementById("cnote").value.trim();
+  if(n) text += "Name: " + n + "\n";
+  if(d) text += "Needed on: " + d + "\n";
+  if(m) text += "Note: " + m + "\n";
+  a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+  a.target = "_blank"; a.rel = "noopener";
+  a.removeAttribute("aria-disabled");
+}
+
+document.getElementById("menu").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  var id = +b.dataset.id, d = +b.dataset.d;
+  cart[id] = Math.max(0, (cart[id] || 0) + d);
+  var it = CONFIG.items.filter(function(x){ return x.id === id; })[0];
+  renderControl(it); renderCart();
+  var nb = document.querySelector('#ctl' + id + ' button'); if(nb) nb.focus();
+});
+["cname","cdate","cnote"].forEach(function(id){
+  document.getElementById(id).addEventListener("input", function(){ renderCart(); });
+});
+
+document.getElementById("name").textContent = CONFIG.name;
+renderMenu(); renderCart();
+</script>
+<script>
+/* Custom cake, savings and updated cart. Edit prices in EXTRA. */
+var EXTRA = {perKg:900, fondant:250, topper:150, noSugar:100};
+var COLORS = {"Pink":"#E88FA8","Red":"#C0392B","Blue":"#6FA8DC","Green":"#7FA36A","Gold":"#D9A441","Purple":"#7A5CA8","White":"#F5F2EA"};
+var OCC = {
+ "Birthday":{color:"Pink",sugar:"Regular sugar",tip:"Bright colours and a fun topper work well. Regular sweetness suits most guests."},
+ "Kids party":{color:"Blue",sugar:"Less sugar",tip:"Go lighter on sugar and keep the finish soft. Kids usually prefer buttercream over heavy fondant."},
+ "Anniversary":{color:"Red",sugar:"Less sugar",tip:"Red or deep rose with a short message looks elegant. Less sugar keeps it rich, not too sweet."},
+ "Festival":{color:"Gold",sugar:"Regular sugar",tip:"Gold and warm tones suit Diwali and Pongal. The rasmalai and pistachio flavours go well."}
+};
+var custom = null, color = "Pink";
+var $ = function(id){ return document.getElementById(id); };
+var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function renderSw(){
+  var h = "";
+  Object.keys(COLORS).forEach(function(n){
+    h += '<button type="button" role="radio" aria-checked="' + (n === color) + '" aria-label="' + n + '" data-c="' + n + '" style="background:' + COLORS[n] + '"></button>';
+  });
+  $("cc").innerHTML = h;
+}
+function curCustom(){
+  return {weight:+$("cw").value, sugar:$("cs").value, finish:$("cf").value, topper:$("ct").checked, eggless:$("ce").checked, color:color, text:$("cm").value.trim()};
+}
+function customPrice(c){
+  var p = EXTRA.perKg * c.weight;
+  if(c.finish === "Fondant design") p += EXTRA.fondant;
+  if(c.topper) p += EXTRA.topper;
+  if(c.sugar === "No refined sugar") p += EXTRA.noSugar * c.weight;
+  return Math.round(p);
+}
+function customLabel(c){
+  return c.weight + " kg, " + c.color.toLowerCase() + " icing, " + c.sugar.toLowerCase() + ", " + c.finish.toLowerCase() + (c.topper ? ", topper" : "") + (c.eggless ? ", eggless" : "");
+}
+function updatePreview(){
+  var pv = $("pv");
+  if(!pv){
+    var box = document.querySelector(".pv"); if(box) box.style.background = COLORS[color];
+    $("cprice").textContent = "Price for this cake: " + rupee(customPrice(curCustom()));
+    return;
+  }
+  pv.style.setProperty("--c1", COLORS[color]);
+  pv.style.setProperty("--c2", color === "White" ? "#E3D9C4" : "#FFFFFF");
+  pv.style.setProperty("--c3", "#6E1F3A");
+  pv.style.setProperty("--c4", "#C0392B");
+  $("cprice").textContent = "Price for this cake: " + rupee(customPrice(curCustom()));
+}
+
+function renderCart(){
+  var lines = "", msg = "", sub = 0, hasCake = false, hasSnack = false, any = false;
+  CONFIG.items.forEach(function(it){
+    var q = cart[it.id] || 0; if(!q) return;
+    any = true; sub += q * it.price;
+    if(it.id <= 3) hasCake = true; else hasSnack = true;
+    lines += "<li><span>" + q + " × " + it.name + "</span><span>" + rupee(q * it.price) + "</span></li>";
+    msg += "• " + q + " × " + it.name + "\n";
+  });
+  if(custom){
+    any = true; hasCake = true;
+    var cp = customPrice(custom); sub += cp;
+    lines += '<li><span>Custom cake (' + customLabel(custom) + ')<button class="link" id="rmc" type="button">Remove</button></span><span>' + rupee(cp) + '</span></li>';
+    msg += "• Custom cake: " + customLabel(custom) + " (" + rupee(cp) + ")\n";
+    if(custom.text) msg += "  Message on cake: " + custom.text + "\n";
+  }
+  var total = sub, d = $("cdate").value;
+  if(any && d){
+    var days = Math.round((new Date(d + "T00:00:00") - new Date(new Date().toDateString())) / 864e5);
+    if(days >= 3){
+      var e5 = Math.round(sub * 0.05); total -= e5;
+      lines += '<li class="save"><span>Early-bird discount (5%)</span><span>−' + rupee(e5) + '</span></li>';
+      msg += "Early-bird discount: −" + rupee(e5) + "\n";
+    }
+  }
+  if(hasCake && hasSnack){
+    total -= 100;
+    lines += '<li class="save"><span>Cake and snack combo</span><span>−₹100</span></li>';
+    msg += "Combo discount: −₹100\n";
+  }
+  $("lines").innerHTML = any ? lines : '<li class="empty">Nothing added yet. Pick something from the menu or design your own cake.</li>';
+  $("total").textContent = rupee(total);
+  var a = $("send");
+  if(!any){ a.setAttribute("aria-disabled", "true"); a.href = "#"; return; }
+  var text = "Hi " + CONFIG.name + ", I’d like to order:\n" + msg + "Total: " + rupee(total) + "\n";
+  var n = $("cname").value.trim(), m = $("cnote").value.trim();
+  if(n) text += "Name: " + n + "\n";
+  if(d) text += "Needed on: " + d + "\n";
+  if(m) text += "Note: " + m + "\n";
+  a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+  a.target = "_blank"; a.rel = "noopener";
+  a.removeAttribute("aria-disabled");
+}
+
+$("cc").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  color = b.dataset.c; renderSw(); updatePreview();
+});
+["cw","cs","cf","ct"].forEach(function(id){ $(id).addEventListener("change", updatePreview); });
+$("occ").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  var o = OCC[b.dataset.occ];
+  document.querySelectorAll("#occ .chip").forEach(function(x){ x.setAttribute("aria-pressed", x === b); });
+  color = o.color; $("cs").value = o.sugar; $("tip").textContent = o.tip;
+  renderSw(); updatePreview();
+});
+$("addc").addEventListener("click", function(){
+  custom = curCustom(); renderCart();
+  $("order").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
+});
+$("lines").addEventListener("click", function(e){
+  if(e.target.id === "rmc"){ custom = null; renderCart(); }
+});
+
+function updateAsk(){
+  var q = $("qtext").value.trim(), a = $("qsend");
+  if(!q){ a.setAttribute("aria-disabled", "true"); a.href = "#"; return; }
+  var n = $("qname").value.trim();
+  var t = "Hi " + CONFIG.name + ", I have a question:\n" + q + (n ? "\n– " + n : "");
+  a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(t);
+  a.target = "_blank"; a.rel = "noopener";
+  a.removeAttribute("aria-disabled");
+}
+["qtext","qname"].forEach(function(id){ $(id).addEventListener("input", updateAsk); });
+$("qchips").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  $("qtext").value = b.textContent; updateAsk(); $("qtext").focus();
+});
+updateAsk();
+
+function esc(s){ return String(s).replace(/"/g, "&quot;"); }
+if(CONFIG.photos && CONFIG.photos.length){
+  var g = "";
+  CONFIG.photos.slice(0, 8).forEach(function(p, i){
+    g += '<div class="tile photo" role="listitem"><img src="' + esc(p) + '" alt="Cake photo ' + (i + 1) + '" loading="lazy"></div>';
+  });
+  $("gallery").innerHTML = g;
+}
+if(CONFIG.hero){
+  var h = $("heroart"); h.classList.add("photo"); h.removeAttribute("aria-hidden");
+  h.innerHTML = '<img src="' + esc(CONFIG.hero) + '" alt="A cake from ' + esc(CONFIG.name) + '">';
+}
+
+if(CONFIG.preview){
+  var pb = document.querySelector(".pv"); pb.classList.add("photo");
+  pb.innerHTML = '<img src="' + esc(CONFIG.preview) + '" alt="Example cake">';
+}
+
+$("cdate").min = new Date().toISOString().slice(0, 10);
+renderSw(); updatePreview(); renderCart();
+</script>
+</body>
+</html>
